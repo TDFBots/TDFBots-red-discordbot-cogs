@@ -34,7 +34,7 @@ class bump:
         message = "Server: {0} \n Description: {1} \n Users: {2} \n  Invite: {3}".format(server, des, members, inv)
         self.bot.send_message(channel, embed=em)
         await self.bot.say("**======================================================================**")
-        await self.bot.say("**{bump message}**")
+        await self.bot.say("**{ bump message }**")
         await self.bot.say("**======================================================================**")
         
         
