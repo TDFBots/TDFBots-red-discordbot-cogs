@@ -1,0 +1,47 @@
+import discord
+import asyncio
+import sys
+import traceback
+import os
+from discord.ext import commands
+
+class bump:
+    """Bump!"""
+
+    def __init__(self, bot):
+        self.bot = bot
+    @commands.cooldown(1, 14400, type=commands.BucketType.server)
+    @commands.command(pass_context=True)
+    async def bump(self, ctx):
+        """Bump your server!"""
+
+        #Your code will go here
+        server = ctx.message.server
+        count = 1
+        channel = self.bot.get_channel("{channel id}")
+        em = discord.Embed(color=0xea7938) #0xea7938 is the color code
+        em.add_field(name='Name', value=server.name)
+        em.add_field(name='Owner', value=server.owner)
+        em.add_field(name='Description', value=server.default_channel.topic)
+        em.add_field(name='invite', value=await self.bot.create_invite(ctx.message.server))
+        em.add_field(name='Member Count', value=server.member_count)
+        em.set_thumbnail(url=server.icon_url) #Or insert actual URL
+        await self.bot.send_message(channel, embed=em)
+        server = ctx.message.server
+        des = server.default_channel.topic
+        members = server.member_count
+        inv = await self.bot.create_invite(ctx.message.server)
+        message = "Server: {0} \n Description: {1} \n Users: {2} \n  Invite: {3}".format(server, des, members, inv)
+        self.bot.send_message(channel, embed=em)
+        await self.bot.say("**======================================================================**")
+        await self.bot.say("**{bump message}**")
+        await self.bot.say("**======================================================================**")
+        
+        
+
+
+
+
+def setup(bot):
+    bot.add_cog(bump(bot))
+
